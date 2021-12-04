@@ -1,14 +1,13 @@
 const main = (() => {
   const prompt = require("prompt-sync")();
-  const Employee = require("./Employee");
   const HourlyPaid = require("./HourlyPaidEmployee");
   const MonthlyPaid = require("./MonthlyPaidEmployee");
   const CommissionPaid = require("./CommissionEmployee");
 
   const employeeList = [];
 
-  let highestEarner;
-  let lowestEarner;
+  let highestEarnerName;
+  let lowestEarnerName;
 
   let highestSal;
   let lowestSal;
@@ -64,9 +63,9 @@ const main = (() => {
   let totalDeductions = 0;
   let totalNetPay = 0;
 
-  employeeList.map((employee) => {
+  employeeList.map((employee, i) => {
     console.log(`
-      Employee name: ${employee.fisrtName} ${employee.lastName}
+      Employee name: ${employee.firstName} ${employee.lastName}
       Employee number: ${employee.phoneNumber}
       Employee type: ${employee.employeeCode}
       Gross Salary: ${employee.grossSalary()}
@@ -85,23 +84,24 @@ const main = (() => {
         totalHworkers++;
     }
 
-    // if (i === 0) {
-    //   highestSal = employee.grossSalary();
-    //   highestEarner = employee;
-    //   console.log(highestSal, highestEarner);
-    //   lowestSal = employee.grossSalary();
-    //   lowestEarner = employee;
-    // }
+    let fullName = `${employee.firstName} ${employee.lastName}`;
 
-    // if (highestSal < employee.grossSalary()) {
-    //   highestSal = employee.grossSalary();
-    //   highestEarner = employee;
-    // }
+    if (i === 0) {
+      highestSal = employee.grossSalary();
+      highestEarnerName = fullName;
+      lowestSal = employee.grossSalary();
+      lowestEarnerName = fullName;
+    }
 
-    // if (lowestSal > employee.grossSalary()) {
-    //   lowestSal = employee.grossSalary();
-    //   lowestEarner = employee;
-    // }
+    if (highestSal < employee.grossSalary()) {
+      highestSal = employee.grossSalary();
+      highestEarnerName = fullName;
+    }
+
+    if (lowestSal > employee.grossSalary()) {
+      lowestSal = employee.grossSalary();
+      lowestEarnerName = fullName;
+    }
 
     totalGross += employee.grossSalary();
     totalDeductions += employee.deductionsCalculation();
@@ -120,10 +120,10 @@ const main = (() => {
   Total Net Pay: ${totalNetPay}
   `);
 
-  //   console.log(`
-  //     Highest Earner Name: ${highestEarner.firstName} ${highestEarner.lastName}
-  //     Salary: ${highestSal}
-  //     Lowest Earner Name: ${lowestEarner.firstName} ${lowestEarner.lastName}
-  //     Salary: ${lowestSal}
-  //     `);
+  console.log(`
+      Highest Earner Name: ${highestEarnerName}
+      Salary: ${highestSal}
+      Lowest Earner Name: ${lowestEarnerName} 
+      Salary: ${lowestSal}
+      `);
 })();

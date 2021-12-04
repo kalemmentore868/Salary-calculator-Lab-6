@@ -6,7 +6,7 @@ class Employee {
 
   constructor(p, f, l, e) {
     this.phoneNumber = p;
-    this.fisrtName = f;
+    this.firstName = f;
     this.lastName = l;
     this.employeeCode = e;
   }
